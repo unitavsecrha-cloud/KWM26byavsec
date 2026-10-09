@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pendaftaran & Pembayaran</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-page">
+
+  <div class="login-shell">
+
+    <!-- =========================
+         PANEL KIRI - BRANDING
+         ========================= -->
+    <div class="login-brand">
+
+      <div class="brand-content">
+
+        <div class="brand-logo">
+          <img
+            src="logorha.png"
+            alt="Logo Instansi"
+          >
+        </div>
+
+        <div class="brand-title">
+          <h1>SISTEM ADMINISTRASI PENDAFTARAN</h1>
+          <h2>& PEMBAYARAN</h2>
+        </div>
+
+        <div class="brand-line"></div>
+      </div>
+
+      <div class="brand-footer">
+        Sistem Administrasi Digital mpv 2026
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         PANEL KANAN - LOGIN
+         ========================= -->
+    <div class="login-panel">
+
+      <div class="login-card">
+
+        <div class="login-header">
+
+          <div class="login-label">
+            ADMINISTRATOR
+          </div>
+
+          <h3>Login Admin</h3>
+
+          <p>
+            Silakan masuk untuk mengakses
+            halaman administrasi.
+          </p>
+
+        </div>
+
+
+        <form id="login-form" class="login-form">
+
+          <div class="form-group">
+
+            <label for="username">
+              Username
+            </label>
+
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Masukkan username"
+              autocomplete="username"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <div class="password-wrapper">
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                id="togglePassword"
+                aria-label="Tampilkan password"
+              >
+                ◉
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="btnLogin"
+            id="btnLogin"
+          >
+            MASUK
+          </button>
+
+
+          <div
+            id="pesanLogin"
+            class="login-message"
+          ></div>
+
+        </form>
+
+
+        <div class="login-security">
+          <span>🔒</span>
+          Akses khusus administrator
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><span class="brand-icon small">▣</span><strong>Pendaftaran</strong></div>
+      <nav>
+        <button class="nav active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+        <button class="nav" data-page="add">＋ <span>Tambah Pendaftar</span></button>
+        <button class="nav" data-page="data">▤ <span>Data Pendaftar</span></button>
+      </nav>
+      <button id="logoutBtn" class="logout">↪ <span>Logout</span></button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><h2 id="pageTitle">Dashboard</h2><p id="pageSubtitle">Ringkasan data pendaftaran</p></div><div class="admin-pill">● Admin</div></header>
+
+      <section id="dashboardPage" class="page">
+        <div class="stats">
+          <div class="stat"><span>Total Pendaftar</span><b id="statTotal">0</b></div>
+          <div class="stat"><span>QRIS</span><b id="statQris">0</b></div>
+          <div class="stat"><span>Transfer</span><b id="statTransfer">0</b></div>
+          <div class="stat"><span>Tunai</span><b id="statCash">0</b></div>
+        </div>
+        <div class="card"><div class="card-head"><div><h3>Pendaftar Terbaru</h3><p>Data yang baru dimasukkan admin</p></div><button class="btn primary" data-page="add">＋ Tambah</button></div><div class="table-wrap"><table><thead><tr><th>No.</th><th>No. Pendaftaran</th><th>Nama</th><th>Pembayaran</th><th>Pengikut</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody id="recentBody"></tbody></table></div></div>
+      </section>
+
+      <section id="addPage" class="page hidden">
+        <div class="card form-card"><div class="card-head"><div><h3>Tambah Pendaftar</h3><p>Silakan lengkapi data pendaftar dengan benar.</p></div></div>
+          <form id="registrationForm">
+            <div class="form-grid">
+              <div class="field"><label>No. Pendaftaran</label><input id="regNo" readonly value="Otomatis setelah disimpan"><small>Nomor dibuat otomatis oleh sistem.</small></div>
+              <div class="field"><label>Nama Pendaftar <em>*</em></label><input id="name" required maxlength="100" placeholder="Masukkan nama lengkap"></div>
+              <div class="field"><label>NIK <em>*</em></label><input id="nik" required inputmode="numeric" maxlength="16" placeholder="Masukkan NIK 16 digit"></div>
+              <div class="field"><label>Jumlah Pengikut <em>*</em></label><input id="followers" required type="number" min="0" max="999" placeholder="Masukkan jumlah pengikut"><small>Isi 0 jika tidak ada pengikut.</small></div>
+              <div class="field"><label>Metode Pembayaran <em>*</em></label><select id="payment" required><option value="">Pilih metode pembayaran</option><option>QRIS</option><option>Transfer</option><option>Tunai</option></select></div>
+            </div>
+            <div class="form-group">
+  <label>Data Diri <span class="required">*</span></label>
+  <div class="drop-zone" id="dropZoneIdentity">
+    <input type="file" id="identityFile"
+      accept=".jpg,.jpeg,.png,.pdf" hidden>
+    <div>📄 Klik untuk memilih file data diri</div>
+    <small>JPG, JPEG, PNG, PDF • Maks. 10 MB • Wajib</small>
+  </div>
+  <div id="identityPreview" class="file-preview hidden"></div>
+</div>
+
+<div class="form-group">
+  <label>Bukti Pembayaran <span class="optional">(Opsional)</span></label>
+  <div class="drop-zone" id="dropZonePayment">
+    <input type="file" id="paymentFile"
+      accept=".jpg,.jpeg,.png,.pdf" hidden>
+    <div>💳 Klik untuk memilih bukti pembayaran</div>
+    <small>JPG, JPEG, PNG, PDF • Maks. 10 MB • Opsional</small>
+  </div>
+  <div id="paymentPreview" class="file-preview hidden"></div>
+</div>
+            <div class="form-actions"><button type="button" class="btn ghost" id="resetForm">Reset</button><button type="submit" class="btn primary">▣ Simpan Data</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="dataPage" class="page hidden">
+        <div class="card"><div class="card-head"><div><h3>Data Pendaftar</h3><p>Lihat dan kelola seluruh data pendaftar.</p></div><div class="head-actions"><input id="search" class="search" placeholder="Cari nama / NIK..."><button class="btn primary" data-page="add">＋ Tambah</button></div></div><div class="table-wrap"><table><thead><tr><th>No.</th><th>No. Pendaftaran</th><th>Nama</th><th>NIK</th><th>Pengikut</th><th>Pembayaran</th><th>Data Dukung</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody id="dataBody"></tbody></table></div><div class="table-footer" id="tableInfo"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <div id="modal" class="modal hidden"><div class="modal-box"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></div></div>
+  <script src="app.js"></script>
+
+
+<div id="loadingOverlay" class="loading-overlay hidden">
+  <div class="loading-box">
+
+    <div class="loading-circle"></div>
+
+    <div class="loading-title">
+      Menyimpan Data
+    </div>
+
+    <div class="loading-text">
+      Mohon tunggu, data sedang diproses...
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
